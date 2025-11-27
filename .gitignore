@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# Environment
+.env
+.env.local
+.env.production
+
+# Logs
+logs/
+*.log
+
+# Database
+*.db
+*.db-journal
+
+# Prisma
+prisma/migrations/
+
+# Testing
+coverage/
+
+# Misc
+.DS_Store
