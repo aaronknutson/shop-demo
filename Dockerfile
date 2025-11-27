@@ -1,6 +1,9 @@
 # Backend Dockerfile for Lobo Automotive
 FROM node:20-alpine
 
+# Install OpenSSL for Prisma
+RUN apk add --no-cache openssl
+
 # Set working directory
 WORKDIR /app
 
