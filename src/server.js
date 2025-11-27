@@ -5,7 +5,7 @@ const logger = require('./config/logger');
 const PORT = process.env.PORT || 5000;
 
 // Start server
-const server = app.listen(PORT, () => {
+const server = app.listen(PORT, '0.0.0.0', () => {
   logger.info(`🚀 Auto Shop Demo API running on port ${PORT}`);
   logger.info(`📝 Environment: ${process.env.NODE_ENV || 'development'}`);
 });

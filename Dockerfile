@@ -24,5 +24,5 @@ EXPOSE 5000
 HEALTHCHECK --interval=30s --timeout=3s --start-period=20s --retries=3 \
   CMD node -e "require('http').get('http://localhost:5000/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})" || exit 1
 
-# Start server
-CMD ["node", "src/server.js"]
+# Start server (run migrations first, then start)
+CMD sh -c "npx prisma migrate deploy && node src/server.js"
