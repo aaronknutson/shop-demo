@@ -21,8 +21,8 @@ COPY . .
 EXPOSE 5000
 
 # Health check using native Node.js
-HEALTHCHECK --interval=30s --timeout=3s --start-period=20s --retries=3 \
+HEALTHCHECK --interval=30s --timeout=5s --start-period=60s --retries=3 \
   CMD node -e "require('http').get('http://localhost:5000/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})" || exit 1
 
 # Start server (run migrations first, then start)
-CMD sh -c "npx prisma migrate deploy && node src/server.js"
+CMD sh -c "echo 'Starting application...' && npx prisma migrate deploy && echo 'Migrations complete. Starting server...' && node src/server.js"

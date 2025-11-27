@@ -15,7 +15,7 @@ logs/
 *.db-journal
 
 # Prisma
-prisma/migrations/
+# prisma/migrations/ - migrations should be committed for deployment
 
 # Testing
 coverage/
