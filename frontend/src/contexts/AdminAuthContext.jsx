@@ -5,6 +5,9 @@ const AdminAuthContext = createContext(null);
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL || '/api';
 
+// Debug log
+console.log('Admin Auth - API Base URL:', API_BASE);
+
 export const AdminAuthProvider = ({ children }) => {
   const [admin, setAdmin] = useState(null);
   const [loading, setLoading] = useState(true);
