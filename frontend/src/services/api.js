@@ -3,6 +3,9 @@ import axios from 'axios';
 // Create axios instance with base configuration
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
 
+// Log API URL for debugging
+console.log('API Base URL:', API_BASE_URL);
+
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
   headers: {
