@@ -10,7 +10,10 @@ import { useCustomerAuth } from '../contexts/CustomerAuthContext';
 import { useToast } from '../contexts/ToastContext';
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_URL = import.meta.env.VITE_API_BASE_URL || '/api';
+
+// Debug log
+console.log('Login Page - API URL:', API_URL);
 
 const schema = yup.object({
   email: yup.string().email('Invalid email').required('Email is required'),
