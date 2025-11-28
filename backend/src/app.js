@@ -24,6 +24,9 @@ const tipsRoutes = require('./routes/tips.routes');
 
 const app = express();
 
+// Trust proxy - required for Dokploy/Traefik/reverse proxies
+app.set('trust proxy', 1);
+
 // Security middleware
 app.use(helmet());
 

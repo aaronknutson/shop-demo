@@ -76,7 +76,7 @@ RUN echo '[supervisord]' > /etc/supervisord.conf && \
     echo 'pidfile=/var/run/supervisord.pid' >> /etc/supervisord.conf && \
     echo '' >> /etc/supervisord.conf && \
     echo '[program:backend]' >> /etc/supervisord.conf && \
-    echo 'command=sh -c "npx prisma migrate deploy && node src/server.js"' >> /etc/supervisord.conf && \
+    echo 'command=sh -c "npx prisma migrate deploy && node prisma/seed.js && node src/server.js"' >> /etc/supervisord.conf && \
     echo 'directory=/app/backend' >> /etc/supervisord.conf && \
     echo 'autostart=true' >> /etc/supervisord.conf && \
     echo 'autorestart=true' >> /etc/supervisord.conf && \
