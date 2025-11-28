@@ -12,32 +12,32 @@ describe('Review API', () => {
     await prisma.review.createMany({
       data: [
         {
-          customerName: 'John Smith',
+          name: 'John Smith',
           rating: 5,
           comment: 'Excellent service! Very professional and honest.',
-          serviceName: 'Oil Change',
-          isApproved: true
+          service: 'Oil Change',
+          approved: true
         },
         {
-          customerName: 'Jane Doe',
+          name: 'Jane Doe',
           rating: 4,
           comment: 'Good experience, will come back.',
-          serviceName: 'Brake Service',
-          isApproved: true
+          service: 'Brake Service',
+          approved: true
         },
         {
-          customerName: 'Bob Johnson',
+          name: 'Bob Johnson',
           rating: 5,
           comment: 'Best auto shop in Dallas!',
-          serviceName: 'Engine Repair',
-          isApproved: true
+          service: 'Engine Repair',
+          approved: true
         },
         {
-          customerName: 'Pending Review',
+          name: 'Pending Review',
           rating: 5,
           comment: 'This review is pending approval',
-          serviceName: 'Tire Service',
-          isApproved: false
+          service: 'Tire Service',
+          approved: false
         }
       ]
     });

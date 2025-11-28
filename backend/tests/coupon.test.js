@@ -15,37 +15,33 @@ describe('Coupon API', () => {
           title: '$20 Off Oil Change',
           description: 'Save $20 on your next oil change service',
           code: 'OIL20',
-          discount: 20,
-          discountType: 'fixed',
+          discount: '$20 off',
           expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days from now
-          isActive: true
+          active: true
         },
         {
           title: '15% Off Brake Service',
           description: 'Get 15% off brake pad replacement',
           code: 'BRAKE15',
-          discount: 15,
-          discountType: 'percentage',
+          discount: '15% off',
           expiresAt: new Date(Date.now() + 60 * 24 * 60 * 60 * 1000), // 60 days from now
-          isActive: true
+          active: true
         },
         {
           title: 'Expired Coupon',
           description: 'This coupon has expired',
           code: 'EXPIRED',
-          discount: 10,
-          discountType: 'fixed',
+          discount: '$10 off',
           expiresAt: new Date(Date.now() - 24 * 60 * 60 * 1000), // yesterday
-          isActive: true
+          active: true
         },
         {
           title: 'Inactive Coupon',
           description: 'This coupon is inactive',
           code: 'INACTIVE',
-          discount: 25,
-          discountType: 'fixed',
+          discount: '$25 off',
           expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-          isActive: false
+          active: false
         }
       ]
     });
@@ -75,7 +71,6 @@ describe('Coupon API', () => {
       expect(coupon).toHaveProperty('description');
       expect(coupon).toHaveProperty('code');
       expect(coupon).toHaveProperty('discount');
-      expect(coupon).toHaveProperty('discountType');
       expect(coupon).toHaveProperty('expiresAt');
     });
 
