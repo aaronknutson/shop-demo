@@ -10,7 +10,7 @@ WORKDIR /app/frontend
 COPY frontend/package*.json ./
 
 # Install dependencies
-RUN npm ci
+RUN npm install --production
 
 # Copy frontend source
 COPY frontend/ ./
@@ -40,8 +40,8 @@ WORKDIR /app/backend
 COPY backend/package*.json ./
 COPY backend/prisma ./prisma/
 
-# Install dependencies (including dev for Prisma)
-RUN npm install --production=false
+# Install all dependencies (including dev for Prisma)
+RUN npm install
 
 # Generate Prisma client
 RUN npx prisma generate
