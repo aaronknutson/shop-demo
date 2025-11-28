@@ -1,0 +1,190 @@
+// Lobo Automotive Database Schema
+// PostgreSQL database with Prisma ORM
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Contact form submissions
+model Contact {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  phone     String
+  message   String   @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("contacts")
+}
+
+// Service quote requests
+model Quote {
+  id            String    @id @default(uuid())
+  name          String
+  email         String
+  phone         String
+  vehicleMake   String?
+  vehicleModel  String?
+  vehicleYear   Int?
+  serviceType   String
+  preferredDate DateTime?
+  message       String?   @db.Text
+  status        String    @default("pending") // pending, contacted, completed, cancelled
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@map("quotes")
+}
+
+// Coupons and special offers
+model Coupon {
+  id          String   @id @default(uuid())
+  title       String
+  description String   @db.Text
+  discount    String   // e.g., "$20 off", "10% off"
+  code        String   @unique
+  expiresAt   DateTime
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("coupons")
+}
+
+// Customer reviews and testimonials
+model Review {
+  id        String   @id @default(uuid())
+  name      String
+  comment   String   @db.Text
+  rating    Int      // 1-5 stars
+  service   String?  // Optional service they reviewed
+  approved  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("reviews")
+}
+
+// Admin users for dashboard access
+model Admin {
+  id        String   @id @default(uuid())
+  username  String   @unique
+  email     String   @unique
+  password  String   // Hashed password
+  role      String   @default("admin") // admin, super_admin
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("admins")
+}
+
+// Appointment bookings
+model Appointment {
+  id            String    @id @default(uuid())
+  customerName  String
+  email         String
+  phone         String
+  vehicleMake   String?
+  vehicleModel  String?
+  vehicleYear   Int?
+  serviceType   String
+  appointmentDate DateTime
+  appointmentTime String  // Time slot (e.g., "09:00", "10:00")
+  duration      Int      @default(60) // Duration in minutes
+  notes         String?  @db.Text
+  status        String   @default("pending") // pending, confirmed, completed, cancelled, no_show
+  reminderSent  Boolean  @default(false)
+  customerId    String?  // Optional link to customer account
+  customer      Customer? @relation(fields: [customerId], references: [id])
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("appointments")
+  @@index([appointmentDate, appointmentTime])
+  @@index([customerId])
+}
+
+// Customer portal users
+model Customer {
+  id            String    @id @default(uuid())
+  email         String    @unique
+  password      String    // Hashed password
+  firstName     String
+  lastName      String
+  phone         String
+  active        Boolean   @default(true)
+  vehicles      Vehicle[]
+  appointments  Appointment[]
+  serviceHistory ServiceRecord[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@map("customers")
+}
+
+// Customer vehicles
+model Vehicle {
+  id            String   @id @default(uuid())
+  customerId    String
+  customer      Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  year          Int
+  make          String
+  model         String
+  vin           String?
+  licensePlate  String?
+  mileage       Int?
+  notes         String?  @db.Text
+  isPrimary     Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("vehicles")
+  @@index([customerId])
+}
+
+// Service history records
+model ServiceRecord {
+  id            String   @id @default(uuid())
+  customerId    String
+  customer      Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  serviceDate   DateTime
+  serviceType   String
+  description   String   @db.Text
+  mileage       Int?
+  cost          Float?
+  vehicleInfo   String?  // Year Make Model
+  technician    String?
+  notes         String?  @db.Text
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("service_records")
+  @@index([customerId])
+  @@index([serviceDate])
+}
+
+// Maintenance tips / blog posts
+model Tip {
+  id        String   @id @default(uuid())
+  slug      String   @unique
+  title     String
+  category  String
+  excerpt   String   @db.Text
+  content   String   @db.Text
+  readTime  String
+  tags      String[] // Array of tags
+  published Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("tips")
+  @@index([slug])
+  @@index([published])
+}

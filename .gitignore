@@ -1,0 +1,49 @@
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+
+# Build outputs
+dist/
+build/
+*.log
+logs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Testing
+coverage/
+.nyc_output/
+
+# Prisma
+prisma/migrations/
+*.db
+*.db-journal
+
+# Docker
+docker-compose.override.yml
+
+# Misc
+.cache/
+.temp/
+*.pid
+*.seed
+*.pid.lock
+
+# Markdown files
+*.md
+!README.md
